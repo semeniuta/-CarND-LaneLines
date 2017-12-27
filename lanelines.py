@@ -3,6 +3,16 @@ import matplotlib.image as mpimg
 import numpy as np
 import cv2
 
+
+def e2h(x):
+    return np.array([x[0], x[1], 1.0])
+
+
+def h2e(x):
+    x = np.array(x)
+    return x[:2] / x[2]
+
+
 def define_lanes_region(image, x_from=450, x_to=518, y_lim=317, left_offset=50, right_offset=0):
 
     y_hi, x_hi = image.shape[:2]
@@ -42,11 +52,34 @@ def compute_line_tangents(lines):
     return tans
 
 
+def line_vector_constant_y(val):
+    return np.array([0, 1, -val])
+
+
+def line_vector_from_opencv_points(line):
+
+    x1, y1, x2, y2 = line
+    return np.cross([x1, y1, 1], [x2, y2, 1])
+
+
 def draw_lines_on_image(canvas_im, lines, color=[255, 0, 0], thickness=2):
 
     for i in range(lines.shape[0]):
         x1, y1, x2, y2 = lines[i, :]
         cv2.line(canvas_im, (x1, y1), (x2, y2), color, thickness)
+
+
+def plot_homogeneous_line_vector(vec, x_from, x_to, **kvargs):
+
+    a, b, c = vec
+
+    def line_func(x):
+        return (-a * x - c) / b
+
+    xs = np.arange(x_from, x_to)
+    ys = line_func(xs)
+
+    plt.plot(xs, ys, **kvargs)
 
 
 def visualize_test_images(images, proc_func=lambda im : im):

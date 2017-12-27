@@ -91,11 +91,21 @@ def extend_lane_lines_grouped_by_slopes(lines, slopes, y_const_0, y_const_1):
     return lines_left, lines_right
 
 
+def average_lines_endpoints(lines):
+
+    return np.array(lines.mean(axis=0), dtype=np.int32)
+
+
+def draw_line(canvas_im, line, color=[255, 0, 0], thickness=2):
+
+    x1, y1, x2, y2 = line
+    cv2.line(canvas_im, (x1, y1), (x2, y2), color, thickness)
+
+
 def draw_lines_on_image(canvas_im, lines, color=[255, 0, 0], thickness=2):
 
     for i in range(lines.shape[0]):
-        x1, y1, x2, y2 = lines[i, :]
-        cv2.line(canvas_im, (x1, y1), (x2, y2), color, thickness)
+        draw_line(canvas_im, lines[i, :], color, thickness)
 
 
 def plot_homogeneous_line_vector(vec, x_from, x_to, **kvargs):

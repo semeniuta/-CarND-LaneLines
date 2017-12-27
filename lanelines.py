@@ -42,6 +42,13 @@ def compute_line_tangents(lines):
     return tans
 
 
+def draw_lines_on_image(canvas_im, lines, color=[255, 0, 0], thickness=2):
+
+    for i in range(lines.shape[0]):
+        x1, y1, x2, y2 = lines[i, :]
+        cv2.line(canvas_im, (x1, y1), (x2, y2), color, thickness)
+
+
 def visualize_test_images(images, proc_func=lambda im : im):
 
     plt.figure(figsize=(15, 8))

@@ -96,9 +96,40 @@ def average_lines_endpoints(lines):
     return np.array(lines.mean(axis=0), dtype=np.int32)
 
 
-def weighted_average_lines_endpoints(lines, n_rows):
+def lines_distances_to_bottom(lines, n_rows):
 
-    pass
+    def dist_to_bottom(line):
+        y1 = line[1]
+        y2 = line[3]
+        y_smaller = y1 if y1 < y2 else y2
+        return n_rows - y_smaller
+
+    n = len(lines)
+    distances = np.zeros(n)
+
+    for i in range(n):
+        distances[i] = dist_to_bottom(lines[i, :])
+
+    return distances
+
+
+def weighted_average_lines_endpoints(lines, distances_to_bottom):
+
+    x1 = lines[:, 0]
+    y1 = lines[:, 1]
+    x2 = lines[:, 2]
+    y2 = lines[:, 3]
+
+    mu_y1 = y1[0]
+    mu_y2 = y2[0]
+
+    weights = 1. / distances_to_bottom
+    weights_sum = weights.sum()
+
+    mu_x1 = (x1 * weights).sum() / weights_sum
+    mu_x2 = (x2 * weights).sum() / weights_sum
+
+    return np.array([mu_x1, mu_y1, mu_x2, mu_y2], dtype=np.int32)
 
 
 def draw_line(canvas_im, line, color=[255, 0, 0], thickness=2):

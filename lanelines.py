@@ -113,6 +113,11 @@ def lines_distances_to_bottom(lines, n_rows):
     return distances
 
 
+def split_distances_to_bottom(distances, slopes):
+
+    return distances[slopes < 0], distances[slopes > 0]
+
+
 def weighted_average_lines_endpoints(lines, distances_to_bottom):
 
     x1 = lines[:, 0]

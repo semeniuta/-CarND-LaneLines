@@ -96,6 +96,11 @@ def average_lines_endpoints(lines):
     return np.array(lines.mean(axis=0), dtype=np.int32)
 
 
+def weighted_average_lines_endpoints(lines, n_rows):
+
+    pass
+
+
 def draw_line(canvas_im, line, color=[255, 0, 0], thickness=2):
 
     x1, y1, x2, y2 = line
@@ -130,7 +135,7 @@ def plot_homogeneous_line_vector(vec, x_from, x_to, **kvargs):
 
 def visualize_test_images(images, proc_func=lambda im : im):
 
-    plt.figure(figsize=(15, 8))
+    plt.figure(figsize=(16, 16))
     for i, im in enumerate(images):
-        plt.subplot(2, 3, i+1)
+        plt.subplot(3, 2, i+1)
         plt.imshow(proc_func(im))

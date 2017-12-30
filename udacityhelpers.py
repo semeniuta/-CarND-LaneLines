@@ -93,4 +93,3 @@ def weighted_img(img, initial_img, α=0.8, β=1., λ=0.):
     NOTE: initial_img and img must be the same shape!
     """
     return cv2.addWeighted(initial_img, α, img, β, λ)
-    

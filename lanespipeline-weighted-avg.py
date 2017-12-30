@@ -1,6 +1,8 @@
 import udacityhelpers as udacity
 from lanelines import *
 from compgraph import CompGraph, CompGraphRunner
+import numpy as np
+import cv2
 
 
 func_dict = {
@@ -39,9 +41,9 @@ func_io = {
 
 }
 
-cg = CompGraph(func_dict, func_io)
+computational_graph = CompGraph(func_dict, func_io)
 
-frozen = {
+parameters = {
     'x_from': 450,
     'x_to': 518,
     'y_lim': 317,
@@ -56,5 +58,3 @@ frozen = {
     'min_line_length': 7,
     'max_line_gap': 1
 }
-
-runner = CompGraphRunner(cg, frozen_tokens=frozen)

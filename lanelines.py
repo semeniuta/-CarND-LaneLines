@@ -83,10 +83,12 @@ def extend_lane_lines(lines, y_const_0, y_const_1):
     return res
 
 
-def extend_lane_lines_grouped_by_slopes(lines, slopes, y_const_0, y_const_1):
+def extend_lane_lines_grouped_by_slopes(lines, slopes, y_const_0, y_const_1, abs_slope_threshold=0.2):
 
-    lines_left = extend_lane_lines(lines[slopes < 0], y_const_0, y_const_1)
-    lines_right = extend_lane_lines(lines[slopes > 0], y_const_0, y_const_1)
+    valid_lines = np.abs(slopes) > abs_slope_threshold
+
+    lines_left = extend_lane_lines(lines[np.logical_and(slopes < 0, valid_lines)], y_const_0, y_const_1)
+    lines_right = extend_lane_lines(lines[np.logical_and(slopes > 0, valid_lines)], y_const_0, y_const_1)
 
     return lines_left, lines_right
 

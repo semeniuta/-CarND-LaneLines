@@ -32,7 +32,7 @@ func_io = {
     'apply_region_mask': (('image_canny', 'region_vertices'), 'masked_image'),
     'hough_lines': (('masked_image', 'rho', 'theta', 'hough_threshold', 'min_line_length', 'max_line_gap'), 'lines'),
     'compute_line_tangents': ('lines', 'tangents'),
-    'extend_lines': (('lines', 'tangents', 'y_lim', 'n_rows'), ('extended_lines_left', 'extended_lines_right')),
+    'extend_lines': (('lines', 'tangents', 'y_lim', 'n_rows', 'abs_slope_threshold'), ('extended_lines_left', 'extended_lines_right')),
     'average_endpoints_left': ('extended_lines_left', 'avg_line_left'),
     'average_endpoints_right': ('extended_lines_right', 'avg_line_right'),
     'lines_distances_to_bottom': (('lines', 'n_rows'), 'dist_to_bottom')
@@ -54,5 +54,6 @@ parameters = {
     'theta': np.pi/180,
     'hough_threshold': 20,
     'min_line_length': 7,
-    'max_line_gap': 1
+    'max_line_gap': 1,
+    'abs_slope_threshold': 0.2
 }
